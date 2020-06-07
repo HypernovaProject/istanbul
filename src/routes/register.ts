@@ -15,12 +15,14 @@ router.post('/', parser, async (req: Request, res: Response) => {
 
     const user: User = (
         await table('users')
-            .filter(row('username').eq(req.body.user))
+            .filter(row('username').eq(req.body.username))
             .run(await prod())
             .then((cursor) => cursor.toArray())
     )[0] as User;
 
-    if (user.fullName != undefined) {
+    if (user) {
+        res.json({ message: 'User already exists.' });
+    } else {
         table('users')
             .insert([
                 {
@@ -31,8 +33,7 @@ router.post('/', parser, async (req: Request, res: Response) => {
                 },
             ])
             .run(await prod());
-        console.log('is not undefined');
-    } else {
+        res.json({ message: 'User already exists.' });
         console.log('is undefined');
     }
 });
