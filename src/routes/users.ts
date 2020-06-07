@@ -1,9 +1,26 @@
 import express from 'express';
+import { db, connect, table, row } from 'rethinkdb';
+import bodyParser from 'body-parser';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({ username: null });
+const parser = bodyParser.urlencoded({ extended: false });
+
+router.get('/', parser, (req, res) => {
+    let connection = null;
+    if (!req.body.user) return res.json({ message: "Missing 'user' query" });
+    connect({ host: 'localhost', port: 28015 }, (err, conn) => {
+        if (err) throw err;
+        connection = conn;
+        db('prod').table('users').filter(row('username').eq(req.body.user)).
+            run(connection, (err, cursor) => {
+                if (err) throw err;
+                cursor.toArray((err, result) => {
+                    if (err) throw err;
+                    res.json({fullName: result[0].fullName, username: result[0].username, createdAt: result[0].createdAt})
+                })
+            })
+    })
 });
 
 export default router;
