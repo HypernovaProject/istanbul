@@ -33,7 +33,7 @@ router.post('/', parser, async (req: Request, res: Response) => {
                 },
             ])
             .run(await prod());
-        res.json({ message: 'User already exists.' });
+        res.json({ message: 'Registered. Thanks for playing!' });
         console.log('is undefined');
     }
 });

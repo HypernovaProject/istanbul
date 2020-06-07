@@ -1,14 +1,15 @@
 import express, { Request, Response } from 'express';
-import { db, connect, table, row, Connection } from 'rethinkdb';
+import { table, row } from 'rethinkdb';
 import bodyParser from 'body-parser';
 
+import auth from '../middleware/authToken';
 import prod from '../utils/prodDatabase';
 import User from '../interfaces/User';
 
 const router = express.Router();
 const parser = bodyParser.urlencoded({ extended: false });
 
-router.get('/', parser, async (req: Request, res: Response) => {
+router.get('/', parser, auth, async (req: Request, res: Response) => {
     if (!req.body.user) return res.json({ message: "Missing 'user' query" });
     const user: User = (
         await table('users')
@@ -16,9 +17,6 @@ router.get('/', parser, async (req: Request, res: Response) => {
             .run(await prod())
             .then((cursor) => cursor.toArray())
     )[0] as User;
-    console.log(delete user.password);
-    console.log(typeof user.password);
-    console.log(user);
     res.json(user);
 });
 
