@@ -34,7 +34,7 @@ router.get('/', parser, async (req: Request, res: Response) => {
         .filter(row('username').eq(req.body.user))
         .run(await prod())
         .then((cursor) => cursor.toArray());
-    res.json(user);
+    delete user.password;
 });
 
 export default router;
