@@ -32,7 +32,7 @@ router.get('/', parser, async (req: Request, res: Response) => {
     if (!req.body.user) return res.json({ message: "Missing 'user' query" });
     const user = await table('posts')
         .filter(row('username').eq(req.body.user))
-        .run(prod)
+        .run(await prod())
         .then((cursor) => cursor.toArray());
     res.json(user);
 });
