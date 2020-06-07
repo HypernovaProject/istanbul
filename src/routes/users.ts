@@ -17,7 +17,7 @@ const parser = bodyParser.urlencoded({ extended: false });
 
 router.get('/', parser, async (req: Request, res: Response) => {
     if (!req.body.user) return res.json({ message: "Missing 'user' query" });
-    const user: User = (await table('posts')
+    const user: User = (await table('users')
         .filter(row('username').eq(req.body.user))
         .run(await prod())
         .then((cursor) => cursor.toArray())) as User;
