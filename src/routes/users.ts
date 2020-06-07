@@ -20,8 +20,11 @@ router.get('/', parser, async (req: Request, res: Response) => {
     const user: User = (await table('users')
         .filter(row('username').eq(req.body.user))
         .run(await prod())
-        .then((cursor) => cursor.toArray())) as User;
-    delete user['password'];
+        .then((cursor) => cursor.toArray()))[0] as User;
+    console.log(delete user.password);
+    console.log(typeof user.password);
+    console.log(user);
+    res.json(user);
 });
 
 export default router;
