@@ -7,6 +7,7 @@ import prod from '../utils/prodDatabase';
 const router = express.Router();
 
 interface User {
+    fullName: string;
     username: string;
     password: string;
     createdAt: string;
