@@ -1,13 +1,13 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 
 const router = express.Router();
-const domain: string = 'http://localhost:3000';
+const domain = 'http://localhost:3000';
 
 import userRoute from './users';
 import registerRoute from './register';
 import closeRoute from './close';
 
-router.get('/', (req, res) => {
+router.get('/', (req: Request, res: Response) => {
     res.json({
         message: 'Hello!',
         endpoints: {

@@ -1,10 +1,12 @@
-import express from 'express';
+import express, { Application } from 'express';
+import cors from 'cors';
 import api from './routes/api';
 
-const app = express();
-const port: number = 3000;
+const app: Application = express();
+const port = 3000;
 
-app.set('trust proxy', 1);
+app.use(cors());
+
 app.use('/api', api);
 app.listen(port, (err) => {
     if (err) return console.error(err);
