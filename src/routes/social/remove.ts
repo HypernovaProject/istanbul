@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
-import { table } from 'rethinkdb';
+import { table, row } from 'rethinkdb';
 import bodyParser from 'body-parser';
-import moment from 'moment';
 
 import checkPosts from '../../utils/checkPosts';
 import auth from '../../middleware/authToken';
@@ -13,36 +12,28 @@ const parser = bodyParser.json();
 
 router.post('/', parser, auth, async (req: Request, res: Response) => {
     /* Check if all JSON values were sent */
-    if (!req.body.post.name || !req.body.post.data || !req.body.post.author || !req.body.post.thumbnail_url)
+    if (!req.body.post.name || !req.body.post.author)
         return res.status(400).json({ message: 'Some data is missing. Please try again!.' });
 
     /* Check whether a post with the same content or name exists */
     const conditionalPost: Promise<Post> = checkPosts(req.body.post.name);
 
-    if ((await (await conditionalPost).postData) == req.body.post.data) {
-        res.status(400).json({ message: 'A post with this content already exists.' });
-    } else if ((await (await conditionalPost).postName) == req.body.post.name) {
-        res.status(400).json({ message: 'A post with this name already exists.' });
+    if ((await (await conditionalPost).postData) != req.body.post.data) {
+        res.status(400).json({ message: 'A post with this content does not exist.' });
+    } else if ((await (await conditionalPost).postName) != req.body.post.name) {
+        res.status(400).json({ message: 'A post by this user does not exist.' });
     }
 
     /* Highly Unlikely Case */
     if ((await await conditionalPost) && (await (await conditionalPost).postAuthor) != req.body.post.author)
         res.status(400).json({ message: 'Imposter effect. Request was made under anauthorized personality.' });
 
-    /* Define the to-be-posted item */
-    const post: Post = {
-        postName: req.body.post.name,
-        postData: req.body.post.data,
-        postAuthor: req.body.post.author,
-        postThumbnail: req.body.post.thumbnail_url,
-        createdAt: moment().format('LLLL'),
-    };
-
-    /* Asynchronous Data Insertion */
+    /* Asynchronous Data Deletion */
     await table('posts')
-        .insert([post])
+        .filter(row('postName').eq(req.body.post.name))
+        .delete()
         .run(await prod());
-    res.status(200).json({ message: 'Inserted successfully!', posted: post });
+    res.status(200).json({ message: 'Deleted successfully!' });
 });
 
 export default router;
