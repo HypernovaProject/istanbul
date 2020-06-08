@@ -1,11 +1,13 @@
 import express, { Application } from 'express';
+import dotenv from 'dotenv';
 import api from './routes/api';
 
+dotenv.config();
+
 const app: Application = express();
-const port = 3000;
+const port = process.env.BACKEND_PORT || 3000;
 
 app.use('/api', api);
-app.listen(port, (err) => {
-    if (err) return console.error(err);
+app.listen(port, () => {
     return console.log('Working on port', port);
 });
