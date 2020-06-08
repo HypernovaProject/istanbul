@@ -3,6 +3,12 @@ import { table, row } from 'rethinkdb';
 import prod from './prodDatabase';
 import Post from '../interfaces/Post';
 
+/**
+ * This function tries to get the post asynchronously from the database by it's name
+ *
+ * @param {string} postName - name of the post
+ * @function
+ */
 const checkPosts = async (postName: string): Promise<any> => {
     try {
         const post: Post = (

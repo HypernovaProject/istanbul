@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 
 const router = express.Router();
 
+/* Import API routes */
 import tokenizerRoute from './tokenizer';
 import validatorRoute from './validator';
 import registerRoute from './register';
@@ -15,6 +16,7 @@ router.get('/', (req: Request, res: Response) => {
     });
 });
 
+/* Use API routes */
 router.use('/tokenizer', tokenizerRoute);
 router.use('/validator', validatorRoute);
 router.use('/register', registerRoute);

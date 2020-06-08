@@ -3,6 +3,12 @@ import { table, row } from 'rethinkdb';
 import User from '../interfaces/User';
 import prod from './prodDatabase';
 
+/**
+ * This function tries to get the user asynchronously from the database by his username
+ *
+ * @param {string} username - name of the user
+ * @function
+ */
 const checkCredentials = async (username: string): Promise<any> => {
     try {
         const user: User = (

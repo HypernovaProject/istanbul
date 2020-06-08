@@ -4,6 +4,14 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+/**
+ * This function acts as a middleware which implies authentciation
+ *
+ * @param {Request} req - server request
+ * @param {Response} res - server response
+ * @param {NextFunction} next - next function
+ * @function
+ */
 function authenticateToken(req: Request, res: Response, next: NextFunction): any {
     const authHeader = req.headers['authorization'];
     const token = authHeader;
