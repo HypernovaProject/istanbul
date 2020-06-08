@@ -15,11 +15,11 @@ router.get('/', (req: Request, res: Response) => {
     });
 });
 
-router.use('/users', userRoute);
-router.use('/register', registerRoute);
-router.use('/close', closeRoute);
 router.use('/tokenizer', tokenizerRoute);
 router.use('/validator', validatorRoute);
+router.use('/register', registerRoute);
 router.use('/social', socialRoute);
+router.use('/users', userRoute);
+router.use('/close', closeRoute);
 
 export default router;
