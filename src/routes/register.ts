@@ -7,10 +7,10 @@ import prod from '../utils/prodDatabase';
 import User from '../interfaces/User';
 
 const router = express.Router();
-const parser = bodyParser.urlencoded({ extended: false });
+const parser = bodyParser.json();
 
 router.post('/', parser, async (req: Request, res: Response) => {
-    if (!req.body.username || !req.body.password || !req.body.fullName)
+    if (!req.body || !req.body.username || !req.body.password || !req.body.fullName)
         return res.json({ message: 'No credentials provided.' });
 
     const user: User = (

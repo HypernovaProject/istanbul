@@ -7,7 +7,7 @@
     "start": "npm run build && node dist/index.js",
     "start:dev": "nodemon",
     "build": "rimraf ./dist && tsc",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix"
   },
   "repository": "https://github.com/pasenidis/typescript-scaffold",
   "author": "Edward Pasenidis <me@edpasenidis.tech>",
@@ -38,6 +38,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.3",
+    "http-errors": "^1.7.3",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.26.0",
     "rethinkdb": "^2.4.2",

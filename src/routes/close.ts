@@ -1,26 +1,26 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import { db, connect, table, row } from 'rethinkdb';
+import { table, row } from 'rethinkdb';
+
+import auth from '../middleware/authToken';
+import prod from '../utils/prodDatabase';
+import User from '../interfaces/User';
+
+import checkCredentials from '../utils/checkCredentials';
 
 const router = express.Router();
-const parser = bodyParser.urlencoded({ extended: false });
+const parser = bodyParser.json();
 
-router.post('/', parser, (req, res) => {
-    let connection = null;
-    if (!req.body.username || !req.body.password) return res.json({ message: "No credentials provided." })
-    connect({ host: 'localhost', port: 28015 }, (err, conn) => {
-        if (err) throw err;
-        connection = conn;
-        db('prod').table('users').filter({ username: req.body.username, password: req.body.password }).delete().run(connection, (err, result) => {
-            if (err) throw err;
-            console.log(JSON.stringify(result, null, 2));
-            res.json({
-                sent_data: {
-                    username: req.body.username
-                }
-            });
-        })
-    })
-})
+router.post('/', auth, parser, async (req: Request, res: Response) => {
+    if (!req.body || !req.body.username || !req.body.password) return res.json({ message: 'No credentials provided.' });
+    const user: Promise<User> = checkCredentials(req.body.username);
+    if ((await user) == undefined) return res.json({ message: 'User not found.' });
+    if ((await (await user).password) !== req.body.password) return res.json({ message: 'Wrong password. Try again' });
+    await table('users')
+        .filter(row('username').eq(req.body.username))
+        .delete()
+        .run(await prod());
+    res.json({ message: 'Removed account.' });
+});
 
 export default router;
