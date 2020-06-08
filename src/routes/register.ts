@@ -11,7 +11,7 @@ const parser = bodyParser.json();
 
 router.post('/', parser, async (req: Request, res: Response) => {
     if (!req.body || !req.body.username || !req.body.password || !req.body.fullName)
-        return res.json({ message: 'No credentials provided.' });
+        return res.status(400).json({ message: 'No credentials provided.' });
 
     const user: User = (
         await table('users')
@@ -33,8 +33,7 @@ router.post('/', parser, async (req: Request, res: Response) => {
                 },
             ])
             .run(await prod());
-        res.json({ message: 'Registered. Thanks for playing!' });
-        console.log('is undefined');
+        res.status(200).json({ message: 'Registered. Thanks for playing!' });
     }
 });
 
