@@ -10,7 +10,7 @@
     "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
     "typedoc": "rimraf ./docs && typedoc --out docs src"
   },
-  "repository": "https://github.com/pasenidis/typescript-scaffold",
+  "repository": "https://github.com/HypernovaProject/istanbul",
   "author": "Edward Pasenidis <me@edpasenidis.tech>",
   "license": "none",
   "private": true,
