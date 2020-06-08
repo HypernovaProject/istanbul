@@ -1,5 +1,5 @@
 {
-  "name": "typescript-scaffold",
+  "name": "hypernova-istanbul",
   "version": "1.0.0",
   "description": "A template for future TS projects.",
   "main": "dist/index.js",
@@ -7,7 +7,8 @@
     "start": "npm run build && node dist/index.js",
     "start:dev": "nodemon",
     "build": "rimraf ./dist && tsc",
-    "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
+    "typedoc": "rimraf ./docs && typedoc --out docs src"
   },
   "repository": "https://github.com/pasenidis/typescript-scaffold",
   "author": "Edward Pasenidis <me@edpasenidis.tech>",
@@ -20,6 +21,7 @@
     "eslint": "^7.1.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
+    "jsdoc": "^3.6.4",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
@@ -40,6 +42,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.26.0",
-    "rethinkdb": "^2.4.2"
+    "rethinkdb": "^2.4.2",
+    "typedoc": "^0.17.7"
   }
 }
