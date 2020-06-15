@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import { db, connect, row, table } from 'rethinkdb';
+import { row, table } from 'rethinkdb';
 import moment from 'moment';
 
 import prod from '../utils/prodDatabase';
