@@ -26,8 +26,8 @@ router.post('/', parser, auth, async (req: Request, res: Response) => {
     }
 
     /* Highly Unlikely Case */
-    if ((await await conditionalPost) && (await (await conditionalPost).postAuthor) != req.body.post.author)
-        res.status(400).json({ message: 'Imposter effect. Request was made under anauthorized personality.' });
+    if ((await conditionalPost) && (await (await conditionalPost).postAuthor) != req.body.post.author)
+        res.status(400).json({ message: 'Imposter alert! Request was made under anauthorized personality.' });
 
     /* Define the to-be-posted item */
     const post: Post = {
