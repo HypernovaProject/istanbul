@@ -17,6 +17,9 @@ router.get('/', parser, auth, async (req: Request, res: Response) => {
             .run(await prod())
             .then((cursor) => cursor.toArray())
     )[0] as User;
+
+    delete user.password;
+    delete user.id;
     res.json(user);
 });
 

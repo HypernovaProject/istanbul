@@ -9,7 +9,7 @@ dotenv.config();
  * @function @async
  */
 const connector = async (): Promise<Connection> => {
-    return await connect({ host: process.env.DB_HOST, port: 28015, db: process.env.DB_DATA });
+    return await connect({ host: process.env.DB_HOST, port: 28015, db: process.env.DB_PROD });
 };
 
 export default connector;

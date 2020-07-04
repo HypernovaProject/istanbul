@@ -5,7 +5,7 @@ import api from './routes/api';
 dotenv.config();
 
 const app: Application = express();
-const port = process.env.BACKEND_PORT || 3000;
+const port = process.env.PORT || 1337;
 
 app.use('/api', api);
 app.listen(port, () => {

@@ -1,5 +1,9 @@
 export default interface User {
     /**
+     * User's ID - used in databases
+     */
+    id: string;
+    /**
      * User's fullname - e.g.: John Doe, Jane Doe
      */
     fullName: string;
