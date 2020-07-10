@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { row, table } from 'rethinkdb';
 import moment from 'moment';
 
+import securityHash from '../utils/security/hash';
 import prod from '../utils/prodDatabase';
 import User from '../interfaces/User';
 
@@ -23,12 +24,13 @@ router.post('/', parser, async (req: Request, res: Response) => {
     if (user) {
         res.json({ message: 'User already exists.' });
     } else {
+        const hash = await securityHash(req.body.password);
         table('users')
             .insert([
                 {
                     fullName: req.body.fullName,
                     username: req.body.username,
-                    password: req.body.password,
+                    password: hash,
                     createdAt: moment().format('LLLL'),
                 },
             ])

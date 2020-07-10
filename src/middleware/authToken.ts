@@ -15,13 +15,20 @@ dotenv.config();
 function authenticateToken(req: Request, res: Response, next: NextFunction): any {
     const authHeader = req.headers['authorization'];
     const token = authHeader;
-    if (token == null) return res.sendStatus(401);
+    if (token == null) return res.status(401).end();
 
-    jwt.verify(token, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
-        console.error(err);
-        if (err) return res.sendStatus(403);
-        next();
-    });
+    try {
+        jwt.verify(token, String(process.env.TOKEN_SECRET) as string, (err: any, user: any) => {
+            console.error(err);
+            if (err) return res.status(403).end();
+            next();
+        });
+    } catch (e) {
+        if (e instanceof jwt.JsonWebTokenError) {
+            return res.status(401).end();
+        }
+        return res.status(400).end();
+    }
 }
 
 export default authenticateToken;
