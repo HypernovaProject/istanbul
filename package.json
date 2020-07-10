@@ -7,7 +7,7 @@
     "start": "npm run build && node dist/index.js",
     "start:dev": "nodemon",
     "build": "rimraf ./dist && tsc",
-    "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
+    "lint": "eslint . --env node --ext .ts --fix -c .eslintrc.js",
     "typedoc": "rimraf ./docs && typedoc --out docs src"
   },
   "repository": "https://github.com/HypernovaProject/istanbul",
