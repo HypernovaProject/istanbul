@@ -10,8 +10,6 @@
 
 ### 🏠 [Homepage](https://hypernova.gq)
 
-### ✨ [Demo](https://hypernova.gq)
-
 ## Install
 
 ```sh
