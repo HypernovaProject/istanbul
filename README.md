@@ -6,7 +6,7 @@
   </a>
 </p>
 
-> A fast RethinkDB backend for Hypernova.
+> A fast and robust backend for the Hypernova Project, that uses Rethink as a database, everything is handled by the Express framework, transpiled to JavaScript from TypeScript :)
 
 ### 🏠 [Homepage](https://hypernova.gq)
 
